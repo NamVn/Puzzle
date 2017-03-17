@@ -14,7 +14,7 @@ class State {
 
     public State(int[] input) {
         array = input;
-        move = "Bat dau goi y nhe: ";
+        move = null;
         blankIndex = getIndex(input, 0);
         previous = null;
         g = 0;
@@ -63,16 +63,30 @@ class State {
      *
      * @return The puzzle as a string.
      */
-    public String toString() {
-        int[] state = this.array;
-        String s = "\n\n";
-        for (int i = 0; i < state.length; i++) {
-            if (i % 3 == 0 && i != 0) s += "\n";
-            s += (state[i] != 0) ? String.format("%d ", state[i]) : "  ";
-
-        }
-        return s;
-    }
+//    public String toString() {
+//        int[] state = this.array;
+//        String s = "\n\n";
+//        if (state.length == 9)
+//            for (int i = 0; i < state.length; i++) {
+//                if (i % 3 == 0 && i != 0)
+//                    s += "\n";
+//                s += (state[i] != 0) ? String.format("%d ", state[i]) : "  ";
+//
+//            }
+//        else if (state.length == 16)
+//            for (int i = 0; i < state.length; i++) {
+//                if (i % 4 == 0 && i != 0)
+//                    s += "\n";
+//                s += (state[i] != 0) ? String.format("%d ", state[i]) : "  ";
+//            }
+//        else if (state.length == 25)
+//            for (int i = 0; i < state.length; i++) {
+//                if (i % 5 == 0 && i != 0)
+//                    s += "\n";
+//                s += (state[i] != 0) ? String.format("%d ", state[i]) : "  ";
+//            }
+//        return s;
+//    }
 
     /**
      * This method returns a string representation of all
@@ -80,11 +94,24 @@ class State {
      *
      * @return String - The puzzle steps as a string.
      */
+//    private String getAllSteps() {
+//        StringBuilder sb = new StringBuilder();
+//        if (this.previous != null) {
+//            sb.append(previous.getAllSteps());
+//           if(previous.move!=null)
+//               sb.append("\n>> "+previous.move+"\n**************************************");
+//        }
+//        sb.append(this.toString());
+//        return sb.toString();
+//    }
     private String getAllSteps() {
         StringBuilder sb = new StringBuilder();
-        if (this.previous != null)
-            sb.append(previous.getAllSteps() + "===> " + previous.move);
-        sb.append(this.toString());
+        if (this.previous != null) {
+            sb.append(previous.getAllSteps());
+            if (previous.move != null)
+                sb.append(previous.move + "\n");
+
+        }
         return sb.toString();
     }
 
@@ -96,7 +123,7 @@ class State {
      */
     public String showSolutionMessage() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getAllSteps() + "===> con 1 nuoc khong goi y nua nhe");
+        sb.append(getAllSteps());
         return sb.toString();
     }
 

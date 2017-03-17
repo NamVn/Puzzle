@@ -17,9 +17,14 @@ class Move {
      * @param state
      * @return
      */
-    public static State up(State state) {
-        if (state.getBlankIndex() > 2)
-            return new State(state, state.getBlankIndex() - 3, state.getArray()[state.getBlankIndex() - 3] + " chuyen xuong duoi");
+    public static State up(State state, int sizeImage) {
+        int blankPosition = state.getBlankIndex();
+        if (sizeImage == 9 && blankPosition > 2)
+            return new State(state, blankPosition - 3, state.getArray()[blankPosition - 3] + " chuyen xuong duoi");
+        else if (sizeImage == 16 && state.getBlankIndex() > 3)
+            return new State(state, blankPosition - 4, state.getArray()[blankPosition - 4] + " chuyen xuong duoi");
+        else if (sizeImage == 25 && blankPosition > 4)
+            return new State(state, blankPosition - 5, state.getArray()[blankPosition - 5] + " chuyen xuong duoi");
         return null;
     }
 
@@ -32,9 +37,14 @@ class Move {
      * @param state
      * @return
      */
-    public static State down(State state) {
-        if (state.getBlankIndex() < 6)
-            return new State(state, state.getBlankIndex() + 3, state.getArray()[state.getBlankIndex() + 3] + " chuyen len tren");
+    public static State down(State state, int sizeImage) {
+        int blankPosition = state.getBlankIndex();
+        if (sizeImage == 9 && blankPosition < 6)
+            return new State(state, blankPosition + 3, state.getArray()[blankPosition + 3] + " chuyen len tren");
+        else if (sizeImage == 16 && blankPosition < 12)
+            return new State(state, blankPosition + 4, state.getArray()[blankPosition + 4] + " chuyen len tren");
+        else if (sizeImage == 25 && blankPosition < 20)
+            return new State(state, blankPosition + 5, state.getArray()[blankPosition + 5] + " chuyen len tren");
         return null;
     }
 
@@ -47,9 +57,14 @@ class Move {
      * @param state
      * @return
      */
-    public static State left(State state) {
-        if (state.getBlankIndex() % 3 > 0)
-            return new State(state, state.getBlankIndex() - 1, state.getArray()[state.getBlankIndex() - 1] + " chuyen sang phai");
+    public static State left(State state, int sizeImage) {
+        int blankPosition = state.getBlankIndex();
+        if (sizeImage == 9 && blankPosition % 3 > 0)
+            return new State(state, blankPosition - 1, state.getArray()[blankPosition - 1] + " chuyen sang phai");
+        else if (sizeImage == 16 && blankPosition % 4 > 0)
+            return new State(state, blankPosition - 1, state.getArray()[blankPosition - 1] + " chuyen sang phai");
+        else if (sizeImage == 25 && blankPosition % 5 > 0)
+            return new State(state, blankPosition - 1, state.getArray()[blankPosition - 1] + " chuyen sang phai");
         return null;
     }
 
@@ -62,9 +77,14 @@ class Move {
      * @param state
      * @return
      */
-    public static State right(State state) {
-        if (state.getBlankIndex() % 3 < 2)
-            return new State(state, state.getBlankIndex() + 1, state.getArray()[state.getBlankIndex() + 1] + " chuyen sang trai");
+    public static State right(State state, int sizeImage) {
+        int blankPosition = state.getBlankIndex();
+        if (sizeImage == 9 && blankPosition != 2 && blankPosition != 5 && blankPosition != 8)
+            return new State(state, blankPosition + 1, state.getArray()[blankPosition + 1] + " chuyen sang trai");
+        else if (sizeImage == 16 && blankPosition != 3 && blankPosition != 7 && blankPosition != 11 && blankPosition != 15)
+            return new State(state, blankPosition + 1, state.getArray()[blankPosition + 1] + " chuyen sang trai");
+        else if (sizeImage == 25 && blankPosition != 4 && blankPosition != 9 && blankPosition != 14 && blankPosition != 19 && blankPosition != 24)
+            return new State(state, blankPosition + 1, state.getArray()[blankPosition + 1] + " chuyen sang trai");
         return null;
     }
 }
