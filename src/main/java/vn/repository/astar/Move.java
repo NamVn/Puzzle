@@ -12,7 +12,7 @@ class Move {
      * 7 2 3
      * 4 6 5
      * 1 0 8
-     * todo 0 index=7-3=4, only up to number 6(index 4)
+     * todo 0 : index=7-3=4, only up to number 6(index 4)
      *
      * @param state
      * @return
