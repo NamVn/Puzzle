@@ -73,8 +73,8 @@ public class Main {
 //                {
 //                        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 23, 22, 0, 24
 //                };
-       // Main.chooseAugro(1, inputArr16);
+        //Main.chooseAugro(1, inputArr8);
         int[] inputAr = {0,8,7,6,5,4,3,2,1};
-        Main.chooseAugro(2, inputAr);
+       Main.chooseAugro(2, inputAr);
     }
 }

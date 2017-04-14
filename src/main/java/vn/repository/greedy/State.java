@@ -7,20 +7,20 @@ public class State {
 
     private String move;
     private int[] array;
-    
+
     private int blankIndex;
     private int positionIndex;
     private int numberIndex;
     private int heuristicValue;
     private State previous;
     private int size;
-    
+
 
     public State(int[] input) {
         this.size = (int) Math.sqrt(input.length*1.0);
         array = input;
-        move = "Bat dau goi y nhe: ";
-        
+        move = "";
+
         blankIndex = getIndex(0);
         positionIndex = getPositionIndex();
         numberIndex =  getNumberIndex(positionIndex);
@@ -38,7 +38,7 @@ public class State {
      */
     public State(State previous, int blankIndex, String move) {
         //Trạng thái này lấy trạng thái ở phía trước
-        
+
         this.size = previous.getSize();
         this.move = move;
         array = Arrays.copyOf(previous.array, previous.array.length);
@@ -56,39 +56,39 @@ public class State {
             heuristicValue = this.getSecondHeuristic();
             //Hàm này lấy tổng Mahatan bắt đầu từ hai hàng cuối cùng đến hết
         }
-        
+
         this.previous = previous;
     }
-    
-    
+
+
     // Các hàm Heurictic
     public int getFirstHeuristic() {
         int heuristic = 0;
-     
-       //Số ô đang xét dánh trọng số 5
-        
-       //Khoảng cách giữa ô cần xét và đích đến trọng số 8
+
+        //Số ô đang xét dánh trọng số 5
+
+        //Khoảng cách giữa ô cần xét và đích đến trọng số 8
         //Khoảng cách giữa ô trắng và ô cần xét trọng số 3
         //Khoảng cách giữa ô trắng và đích đến trọng số 2
-        
-       heuristic -= ((this.positionIndex+1)*10);
-       heuristic += (getManhattanDistance(this.positionIndex,this.numberIndex)*8);
-       heuristic += (getManhattanDistance(this.blankIndex,this.numberIndex)*3);
-       heuristic += (getManhattanDistance(this.blankIndex,this.positionIndex)*2);
-       heuristic -= this.getColumnIndex(this.blankIndex); 
-       heuristic -= this.getRowIndex(this.blankIndex); 
-       return heuristic;
+
+        heuristic -= ((this.positionIndex+1)*10);
+        heuristic += (getManhattanDistance(this.positionIndex,this.numberIndex)*8);
+        heuristic += (getManhattanDistance(this.blankIndex,this.numberIndex)*3);
+        heuristic += (getManhattanDistance(this.blankIndex,this.positionIndex)*2);
+        heuristic -= this.getColumnIndex(this.blankIndex);
+        heuristic -= this.getRowIndex(this.blankIndex);
+        return heuristic;
     }
-    
+
     public int getSecondHeuristic() {
         int heuristic = -100;
-     
-       //Đặt hàm heuristic là -100 để đảm bảo luôn luôn có độ ưu tiên cao hơn các TH ở Hàm Heuristic thứ nhất.
-        
+
+        //Đặt hàm heuristic là -100 để đảm bảo luôn luôn có độ ưu tiên cao hơn các TH ở Hàm Heuristic thứ nhất.
+
         for (int i = this.array.length-2*this.size; i < this.array.length-1; i++) {
             heuristic+=getManhattanDistance(i, this.getIndex(i+1));
         }
-       return heuristic;
+        return heuristic;
     }
 
     /**
@@ -96,12 +96,12 @@ public class State {
      * @param
      * @return
      */
-    
-    
+
+
     // Hàm lấy chỉ số cơ bản
     private int getIndex(int value) {
         for (int i = 0; i < this.array.length; i++)
-            if (this.array[i] == value) 
+            if (this.array[i] == value)
                 return i;
         return -1;
     }
@@ -111,7 +111,7 @@ public class State {
     public int getRowIndex(int realindex){
         return realindex/this.size;
     }
-    
+
     public boolean isConner(){
         boolean isconner = true;
         if(this.getColumnIndex(this.positionIndex)!=(this.size-1)||this.getRowIndex(this.positionIndex)>=(this.size-2))
@@ -122,8 +122,8 @@ public class State {
             isconner = false;
         return isconner;
     }
-    
-    // Hàm lấy chỉ số cao cấp   
+
+    // Hàm lấy chỉ số cao cấp
     public int getPositionIndex() {
         int wrongindex = 0;
         while(this.array[wrongindex]==(wrongindex+1)){
@@ -131,16 +131,16 @@ public class State {
         }
         return wrongindex;
     }
-    
+
     public int getNumberIndex(int wrongindex) {
         return this.getIndex(wrongindex+1);
     }
 
     public int getManhattanDistance(int startindex, int endindex) {
         return Math.abs(this.getColumnIndex(startindex) - this.getColumnIndex(endindex)) + Math.abs(this.getRowIndex(startindex) - this.getRowIndex(endindex));
-        // Nội dung, trị tuyệt đối tọa độ hàng của đích trừ đi hàng của đầu cộng với trị tuyệt đối tọa độ cột của đích trừ đi cột của đầu        
+        // Nội dung, trị tuyệt đối tọa độ hàng của đích trừ đi hàng của đầu cộng với trị tuyệt đối tọa độ cột của đích trừ đi cột của đầu
     }
-    
+
 
     public boolean isSolved() {
         int[] p = array;
@@ -160,7 +160,7 @@ public class State {
         String s = "\n\n";
         for (int i = 0; i < state.length; i++) {
             if (i % this.size == 0 && i != 0) s += "\n";
-                s += (state[i] != 0) ? String.format("%d ", state[i]) : "  ";
+            s += (state[i] != 0) ? String.format("%d ", state[i]) : "  ";
 
         }
         return s;
@@ -175,8 +175,7 @@ public class State {
     private String getAllSteps() {
         StringBuilder sb = new StringBuilder();
         if (this.previous != null)
-            sb.append(previous.getAllSteps() + "===> " + previous.move);
-            sb.append(this.toString()); //Hàm này là hàm gán chuỗi
+            sb.append(previous.getAllSteps() + "\n" + previous.move);
         return sb.toString();
     }
 
@@ -188,7 +187,7 @@ public class State {
      */
     public String showSolutionMessage() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getAllSteps() + "===> con 1 nuoc khong goi y nua nhe");
+        sb.append(getAllSteps());
         return sb.toString();
     }
 
@@ -199,7 +198,7 @@ public class State {
     public int getBlankIndex() {
         return blankIndex;
     }
-    
+
     public int getSize() {
         return size;
     }
@@ -211,7 +210,7 @@ public class State {
     public void setheuricticValue(int heurictic){
         this.heuristicValue = heurictic;
     }
-    
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -225,20 +224,20 @@ public class State {
     public int hashCode() {
         return Arrays.hashCode(array);
     }
-    
+
     public static void main(String[] args) {
         int[] inputAr = {1, 6, 0, 8, 2, 7, 3, 4, 5};
         State state1 = new State(inputAr);
-        
+
         int[] inputAr2 = {1, 6, 7, 8, 0, 2, 3, 4, 5};
         State state2 = new State(inputAr2);
-        
+
         System.out.println("Chuẩn: "+state1.toString());
         System.out.println("Không chuẩn: "+state2.toString());
-        
+
         System.out.println("Chuẩn:"+state1.getHeuristicValue());
         System.out.println("Không chuẩn:"+state2.getHeuristicValue());
         System.out.println("Không chuẩn thấp hơn là sai");
     }
-    
+
 }
