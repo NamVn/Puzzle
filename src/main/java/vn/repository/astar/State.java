@@ -128,7 +128,8 @@ class State {
 //    }
     public String showSolutionMessage() {
               StringBuilder sb = new StringBuilder();
-               sb.append(getAllSteps() + "===> con 1 nuoc khong goi y nua nhe");
+               sb.append(getAllSteps() + "da xong");
+        sb.append("\n\nHet "+this.g + " steps.\n");
               return sb.toString();
           }
     public int g() {
